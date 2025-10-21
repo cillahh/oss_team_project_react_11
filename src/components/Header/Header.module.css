@@ -21,6 +21,7 @@
   display: flex;
   justify-content: space-between; /* 👈 로고와 버튼을 양 끝으로! */
   align-items: center; /* 세로 중앙 정렬 */
+  font-family: 'Do Hyeon';
 }
 
 /* 3. 로고 스타일 */
