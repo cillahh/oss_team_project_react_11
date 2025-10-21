@@ -1,0 +1,74 @@
+/* src/components/SearchComponent/SearchComponent.module.css */
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 20px;
+    /* 검색창과 하단 컨텐츠(그리드) 사이 여백 */
+}
+
+/* 1. 타이틀 스타일 */
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    /* 기본 마진 제거 */
+    color: #343a40;
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+}
+
+.searchControls {
+    display: flex;
+    align-items: right;
+    gap: 8px;
+    /* 컨트롤 요소들 사이의 간격 */
+}
+
+/* 2. 필터(select) 스타일 */
+.filterSelect {
+    padding: 9px 12px;
+    font-size: 0.9rem;
+    border: 0px solid #ced4da;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #FFEC97;
+}
+
+/* 3. 검색어 입력(input) 스타일 */
+.searchInput {
+    width: 400px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    border: 1px solid #FFEC97;
+}
+
+/* 4. 검색 버튼 스타일 */
+.searchButton {
+    display: flex;
+    /* 아이콘 중앙 정렬용 */
+    align-items: center;
+    justify-content: center;
+
+    padding: 8.5px 12px;
+    background-color: #FFEC97;
+    /* 헤더 버튼과 통일 */
+    color: black;
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.searchButton:hover {
+    background-color: #F7D840;
+}
+
+.filterSelect:hover {
+    background-color: #F7D840;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchRecipesByPage } from '../api/recipeAPI'; // API 호출 함수
+import SearchComponent from '../components/Search/SearchBar';
 
 // 한 번에 불러올 아이템 개수 (API 함수와 동일하게 설정)
 const ITEMS_PER_PAGE = 50;
@@ -41,8 +42,8 @@ const RecipeListPage = () => {
 
   return (
     <div style={containerStyle}>
-      <h2>레시피 사진 보기</h2>
-
+        <SearchComponent title="모든 레시피" placeholder='어떤 레시피를 찾으시나요?' />
+    <hr></hr>
       <div style={gridContainerStyle}>
         {/* data.pages는 중첩 배열이므로, flat()을 사용하여 단일 배열로 만들고 렌더링 */}
         {data.pages.flatMap((pageData) => 

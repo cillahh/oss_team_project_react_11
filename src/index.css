@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* src/index.css */
+
+/* ... 기존 코드 ... */
+
+/* Layout 컴포넌트의 <main> 태그에 적용될 스타일 */
+main {
+  /* 내용이 너무 넓어지지 않도록 최대 넓이 설정 (헤더와 동일하게) */
+  max-width: 1200px; 
+  
+  /* 중앙 정렬 */
+  margin: 0 auto; 
+  
+  /* 헤더와 내용 사이에 충분한 여백을 줍니다 (상/하, 좌/우) */
+  padding: 40px 20px; 
+}

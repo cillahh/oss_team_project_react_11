@@ -6,7 +6,6 @@ export const fetchRecipesByPage = async ({ pageParam = 1 }) => {
   const startIndex = pageParam;
   const endIndex = startIndex + ITEMS_PER_PAGE - 1;
 
-  // 🚨 {인증키} 부분은 실제 키로 꼭 바꿔주세요!
   const API_KEY = '40803398dac9421487cf'; 
   const url = `http://openapi.foodsafetykorea.go.kr/api/${API_KEY}/COOKRCP01/json/${startIndex}/${endIndex}`;
 
