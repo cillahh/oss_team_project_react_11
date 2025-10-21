@@ -2,6 +2,8 @@ import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchRecipesByPage } from '../api/recipeAPI'; // API 호출 함수
 import SearchComponent from '../components/Search/SearchBar';
+import styles from './RecipeListPage.module.css';
+import RecipeCard from '../components/RecipeCard/RecipeCard';
 
 // 한 번에 불러올 아이템 개수 (API 함수와 동일하게 설정)
 const ITEMS_PER_PAGE = 50;
@@ -44,25 +46,23 @@ const RecipeListPage = () => {
     <div style={containerStyle}>
         <SearchComponent title="모든 레시피" placeholder='어떤 레시피를 찾으시나요?' />
     <hr></hr>
-      <div style={gridContainerStyle}>
-        {/* data.pages는 중첩 배열이므로, flat()을 사용하여 단일 배열로 만들고 렌더링 */}
+      <div className={styles.gridContainer}> {/* 2. CSS 모듈 그리드 사용 */}
         {data.pages.flatMap((pageData) => 
-          pageData.map((recipe) => (
-            // recipe 객체에서 이미지 URL 필드 사용 (API 문서 확인 필요)
-            // 보통 'RCP_IMG' 또는 'ATT_FILE_NO_MAIN' 같은 필드일 가능성이 높습니다.
-            // 만약 이미지 필드가 없다면 다른 필드(예: RCP_NM)로 대체하여 텍스트로 확인
-            recipe.ATT_FILE_NO_MAIN && ( // 이미지가 있는 경우에만 표시
-              <div key={recipe.RCP_SEQ || Math.random()} style={imageWrapperStyle}>
-                <img 
-                  src={recipe.ATT_FILE_NO_MAIN} 
-                  alt={recipe.RCP_NM || '레시피 이미지'} 
-                  style={imageStyle} 
-                />
-                {/* 레시피 이름도 같이 보고 싶으면 추가 */}
-                <p style={imageTitleStyle}>{recipe.RCP_NM}</p>
-              </div>
-            )
-          ))
+          pageData.map((recipe) => {
+            // 3. API 데이터를 RecipeCard prop에 맞게 가공
+            const recipeProps = {
+              id: recipe.RCP_SEQ,
+              imageUrl: recipe.ATT_FILE_NO_MAIN,
+              title: recipe.RCP_NM,
+              description: recipe.RCP_PARTS_DTLS, // (예시) 재료 필드를 설명으로 사용
+              category: recipe.RCP_PAT2, // (API에 이 정보가 없다면 고정값이나 숨김)
+              way: recipe.RCP_WAY2,  // (API에 이 정보가 없다면 고V정값이나 숨김)
+              isBookmarked: false // (나중에 북마크 기능 구현 시 연결)
+            };
+            
+            // 4. RecipeCard 렌더링
+            return <RecipeCard key={recipe.RCP_SEQ} recipe={recipeProps} />;
+          })
         )}
       </div>
 

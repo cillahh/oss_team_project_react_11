@@ -1,0 +1,118 @@
+/* src/components/RecipeCard/RecipeCard.module.css */
+
+.card {
+  background-color: #ffffff;
+  /* 이미지와 유사하게 둥근 모서리 */
+  border-radius: 16px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* 둥근 모서리 적용을 위해 */
+  
+  text-decoration: none;
+  color: inherit;
+  
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 그리드 레이아웃에서 높이를 맞추기 위함 */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 2. 이미지 섹션 */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 이미지 비율 (정사각형) */
+  /* 만약 4:3 비율을 원하면 aspect-ratio: 4 / 3; */
+}
+
+.recipeImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 잘리더라도 꽉 채움 */
+}
+
+/* 3. 북마크 버튼 */
+.bookmarkButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  
+  border: none;
+  border-radius: 50%; /* 원형 버튼 */
+  width: 36px;
+  height: 36px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.bookmarkButton:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* 북마크 활성화 시 스타일 */
+.bookmarkButton.bookmarked {
+  background-color: #007bff; /* (헤더와 동일한 파란색) */
+  /* 이미지의 초록색을 쓰려면: #2db400 */
+}
+
+/* 4. 컨텐츠 섹션 */
+.contentContainer {
+  padding: 16px;
+  flex-grow: 1; /* 이 영역이 남는 공간을 채우도록 함 */
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #222;
+  text-align: start;
+  
+  /* 제목이 길어지면 ... 처리 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  text-align: start;
+  /* 설명이 길어지면 2줄 ... 처리 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+/* 5. 태그 섹션 */
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0 16px 16px 16px; /* 컨텐츠와 구분 */
+}
+
+.tag {
+  background-color: #f1f3f5; /* 연한 회색 */
+  color: #495057;
+  padding: 6px 10px;
+  border-radius: 20px; /* 이미지와 유사한 캡슐 모양 */
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}

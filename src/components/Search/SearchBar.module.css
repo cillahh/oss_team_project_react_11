@@ -13,7 +13,8 @@
 
 /* 1. 타이틀 스타일 */
 .title {
-    font-size: 1.5rem;
+    font-family: 'Do Hyeon';
+    font-size: 1.7rem;
     font-weight: 600;
     margin: 0;
     /* 기본 마진 제거 */
