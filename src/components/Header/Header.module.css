@@ -1,0 +1,56 @@
+/* src/components/Header/Header.module.css */
+
+/* 1. 헤더 기본 스타일 */
+.header {
+  width: 100%;
+  background-color: #FFEC97;
+  border-bottom: 1px solid #eaeaea; /* 하단 얇은 테두리 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+  padding: 8px 0; /* 상하 여백 */
+  position: sticky; /* 스크롤 시 상단에 고정 (선택 사항) */
+  top: 0;
+  z-index: 100;
+}
+
+/* 2. 내용물 컨테이너 (핵심 레이아웃) */
+.container {
+  max-width: 1200px; /* 웹사이트 최대 넓이 */
+  margin: 0 auto; /* 중앙 정렬 */
+  padding: 0 20px; /* 좌우 여백 */
+  
+  display: flex;
+  justify-content: space-between; /* 👈 로고와 버튼을 양 끝으로! */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 3. 로고 스타일 */
+.logo img {
+  height: 40px; /* 👈 로고 이미지의 '높이'를 40px로 고정 */
+  width: auto;  /* 너비는 비율에 맞게 자동 조절 */
+  display: block; /* 이미지가 가질 수 있는 불필요한 하단 여백 제거 */
+}
+
+/* 4. '마이 쿡클립' 버튼 스타일 */
+.navButton {
+  color: #000000; /* 흰색 글씨 */
+  padding: 10px 10px; /* 버튼 크기 (상하/좌우) */
+  border-radius: 6px; /* 둥근 모서리 */
+  text-decoration: none; /* 밑줄 제거 */
+  font-weight: 500;
+  transition: background-color 0.2s ease; /* 부드러운 호버 효과 */
+
+  /* 세로중앙정렬 */
+  display: flex;
+  align-items: center;
+  gap: 3px; /* 6px 정도의 간격 */
+
+}
+
+/* 마우스 올렸을 때 버튼 색상 살짝 어둡게 */
+.navButton:hover {
+  background-color: #F7D840;
+}
+
+.IoBookmark {
+  font-size: 18px;
+}
