@@ -98,6 +98,7 @@
   -webkit-box-orient: vertical;  
   overflow: hidden;
   line-height: 1.5;
+  line-clamp: 2;
 }
 
 /* 5. 태그 섹션 */
