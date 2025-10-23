@@ -1,6 +1,6 @@
 // 한 번에 불러올 아이템 개수
 const ITEMS_PER_PAGE = 30;
-const API_KEY = '40803398dac9421487cf'; // API 인증키
+const API_KEY = '40803398dac9421487cf';
 
 /**
  * @param {object} params
@@ -16,7 +16,7 @@ export const fetchRecipesByPage = async ({
 }) => {
   const startIndex = pageParam;
   const endIndex = startIndex + ITEMS_PER_PAGE - 1;
-
+ 
   let url = `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/COOKRCP01/json/${startIndex}/${endIndex}`;
 
   // 검색어가 있을 경우, URL에 검색 파라미터를 추가
