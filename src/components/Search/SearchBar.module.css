@@ -1,66 +1,78 @@
-/* src/components/SearchComponent/SearchComponent.module.css */
-
 .searchContainer {
     font-family: 'Jua';
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* title은 왼쪽, controls는 오른쪽 */
+    
+    /* 1. [수정] 화면이 작아질 때 줄바꿈(wrap) 허용 */
+    flex-wrap: wrap; 
+    
+    /* 2. [수정] title과 controls 사이의 '최소 간격'이자 '줄바꿈 시 상하 간격' */
+    gap: 20px; 
 
+    /* 3. [추가] padding이 width: 100% 안쪽으로 계산되도록 하여 튀어나감 방지 */
+    box-sizing: border-box; 
+    
     width: 100%;
     padding: 16px;
     margin-bottom: 20px;
-    /* 검색창과 하단 컨텐츠(그리드) 사이 여백 */
 }
 
-/* 1. 타이틀 스타일 */
 .title {
     font-family: 'Do Hyeon';
     font-size: 1.7rem;
     font-weight: 600;
     margin: 0;
-    /* 기본 마진 제거 */
     color: #343a40;
     white-space: nowrap;
-    /* 줄바꿈 방지 */
+    
+    /* 4. [추가] title이 줄어들지 않게 하여 controls가 먼저 줄바꿈되도록 함 */
+    flex-shrink: 0; 
 }
 
 .searchControls {
     display: flex;
-    align-items: right;
+    align-items: center; /* 5. [수정] 'right'는 잘못된 값, 'center'로 변경 */
     gap: 8px;
-    /* 컨트롤 요소들 사이의 간격 */
+    
+    /* 6. [추가] 남는 공간을 차지하며 오른쪽 정렬을 유지 */
+    flex-grow: 1; 
+    justify-content: flex-end; /* 컨트롤 내부 아이템들을 오른쪽으로 정렬 */
+    
+    /* 7. [추가] 컨트롤 그룹의 최소 너비 (이보다 작아지면 줄바꿈 시도) */
+    min-width: 300px; 
 }
 
-/* 2. 필터(select) 스타일 */
 .filterSelect {
-    font : inherit;
+    font: inherit;
     padding: 9px 12px;
     font-size: 0.9rem;
     border: 0px solid #ced4da;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     background-color: #FFEC97;
+    cursor: pointer; /* 8. [추가] 클릭 가능함을 표시 */
 }
 
-/* 3. 검색어 입력(input) 스타일 */
 .searchInput {
     font-family: 'Jua';
-    width: 400px;
+    
+    /* 9. [수정] 고정 400px 대신, 유연하게 작동하도록 변경 */
+    flex-grow: 1; /* controls 그룹 내에서 남는 공간 모두 차지 */
+    min-width: 150px; /* 너무 작아지지 않게 최소 너비 설정 */
+    max-width: 400px; /* 하지만 400px보다 커지지는 않게 설정 */
+
     padding: 10px 12px;
     font-size: 0.9rem;
     border: 1px solid #FFEC97;
 }
 
-/* 4. 검색 버튼 스타일 */
 .searchButton {
     display: flex;
-    /* 아이콘 중앙 정렬용 */
     align-items: center;
     justify-content: center;
-
     padding: 8.5px 12px;
     background-color: #FFEC97;
-    /* 헤더 버튼과 통일 */
     color: black;
     border: none;
     border-top-right-radius: 10px;
@@ -69,10 +81,7 @@
     transition: background-color 0.2s ease;
 }
 
-.searchButton:hover {
-    background-color: #F7D840;
-}
-
+.searchButton:hover,
 .filterSelect:hover {
     background-color: #F7D840;
 }
