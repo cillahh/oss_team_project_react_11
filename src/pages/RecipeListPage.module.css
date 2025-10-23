@@ -55,3 +55,9 @@
     margin-top: '20px';
     margin-bottom: '50px';
 }
+
+.noResults {
+    padding: 0.7rem;
+    font-family: 'Jua';
+    font-size: 15px;
+}
