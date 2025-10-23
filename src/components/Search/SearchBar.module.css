@@ -1,6 +1,7 @@
 /* src/components/SearchComponent/SearchComponent.module.css */
 
 .searchContainer {
+    font-family: 'Jua';
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,6 +33,7 @@
 
 /* 2. 필터(select) 스타일 */
 .filterSelect {
+    font : inherit;
     padding: 9px 12px;
     font-size: 0.9rem;
     border: 0px solid #ced4da;
@@ -42,6 +44,7 @@
 
 /* 3. 검색어 입력(input) 스타일 */
 .searchInput {
+    font-family: 'Jua';
     width: 400px;
     padding: 10px 12px;
     font-size: 0.9rem;
