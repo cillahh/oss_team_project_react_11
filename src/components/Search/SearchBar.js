@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './SearchBar.module.css'; // 유저가 사용한 파일 이름
 import { CiSearch } from "react-icons/ci";
 
-// 1. ⬇️ 부모로부터 '제어'를 위한 5개의 props를 모두 받습니다.
+// '제어'를 위한 5개의 props
 const SearchComponent = ({ 
   title, 
   placeholder = "검색어를 입력하세요...",
@@ -15,7 +15,6 @@ const SearchComponent = ({
   onSearchSubmit   // 검색 버튼 클릭(form submit) 시 호출될 함수
 }) => {
   return (
-    // 2. ⬇️ <div>를 <form>으로 변경하고, 부모의 onSubmit 함수를 연결합니다.
     <form className={styles.searchContainer} onSubmit={onSearchSubmit}>
 
       <h3 className={styles.title}>{title}</h3>
