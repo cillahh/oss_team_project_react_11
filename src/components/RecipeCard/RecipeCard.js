@@ -56,7 +56,7 @@ const RecipeCard = ({ recipe, onOpenModal }) => {
       {/* 5. 태그 섹션 (준비시간, 조리시간) */}
       <div className={styles.tagsContainer}>
         {recipe.category && <span className={styles.tag}>#카테고리 | {recipe.category}</span>}
-        {recipe.way && <span className={styles.tag}>#조리방법 | {recipe.way}</span>}
+        {recipe.method && <span className={styles.tag}>#조리방법 | {recipe.method}</span>}
       </div>
 
     </Link>

@@ -26,14 +26,19 @@
 .imageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* 이미지 비율 (정사각형) */
-  /* 만약 4:3 비율을 원하면 aspect-ratio: 4 / 3; */
+  /* aspect-ratio: 1 / 1; */
+  height: 0; /* 컨테이너의 높이를 0으로 만듭니다. */
+  padding-bottom: 100%;
 }
 
 .recipeImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 이미지가 잘리더라도 꽉 채움 */
+  object-fit: cover;
 }
 
 /* 3. 북마크 버튼 */
