@@ -1,40 +1,56 @@
 // src/components/SearchComponent/SearchComponent.js
 
 import React from 'react';
-import styles from './SearchBar.module.css'; // CSS 모듈 불러오기
-import { CiSearch } from "react-icons/ci"; // 검색 아이콘
+import styles from './SearchBar.module.css'; // 유저가 사용한 파일 이름
+import { CiSearch } from "react-icons/ci";
 
-const SearchComponent = ({ title, placeholder = "검색어를 입력하세요..." }) => {
-    return (
-        // 1. 전체를 감싸는 Flexbox 컨테이너
-        <div className={styles.searchContainer}>
+// 1. ⬇️ 부모로부터 '제어'를 위한 5개의 props를 모두 받습니다.
+const SearchComponent = ({ 
+  title, 
+  placeholder = "검색어를 입력하세요...",
+  inputValue,      // input에 표시될 값
+  onInputChange,   // input이 변경될 때 호출될 함수
+  filterValue,     // select에 표시될 값
+  onFilterChange,  // select가 변경될 때 호출될 함수
+  onSearchSubmit   // 검색 버튼 클릭(form submit) 시 호출될 함수
+}) => {
+  return (
+    // 2. ⬇️ <div>를 <form>으로 변경하고, 부모의 onSubmit 함수를 연결합니다.
+    <form className={styles.searchContainer} onSubmit={onSearchSubmit}>
 
-            {/* 2. Props로 받은 Title */}
-            <h3 className={styles.title}>{title}</h3>
+      <h3 className={styles.title}>{title}</h3>
 
-            <div className={styles.searchControls}>
-                {/* 3. 필터 (Select Box) */}
-                <select name="filter" className={styles.filterSelect}>
-                    <option value="all">필터</option>
-                    <option value="recipe">카테고리</option>
-                    <option value="ingredient">조리법</option>
-                </select>
+      <div className={styles.searchControls}>
+        
+        {/* 3. ⬇️ select에 value와 onChange를 연결합니다. */}
+        <select 
+          name="filter" 
+          className={styles.filterSelect}
+          value={filterValue}
+          onChange={onFilterChange}
+        >
+          {/* [중요] value는 API가 기대하는 값과 일치해야 합니다. */}
+          {/* (예: 'recipe'는 API의 RCP_NM, 'ingredient'는 RCP_PARTS_DTLS) */}
+          <option value="recipe">카테고리</option>
+          <option value="ingredient">조리법</option>
+        </select>
 
-                {/* 4. 검색어 입력 필드 (Props로 받은 placeholder 사용) */}
-                <input
-                    type="text"
-                    className={styles.searchInput}
-                    placeholder={placeholder}
-                />
+        {/* input에 value와 onChange를 연결합니다. */}
+        <input
+          type="text"
+          className={styles.searchInput}
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={onInputChange}
+        />
 
-                {/* 5. 검색 버튼 */}
-                <button type="button" className={styles.searchButton}>
-                    <CiSearch size={22} />
-                </button>
-            </div>
+        <button type="submit" className={styles.searchButton}>
+          <CiSearch size={22} />
+        </button>
+      </div>
 
-        </div>
-    );
+    </form>
+  );
 };
 
 export default SearchComponent;

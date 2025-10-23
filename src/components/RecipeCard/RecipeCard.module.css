@@ -1,9 +1,10 @@
 /* src/components/RecipeCard/RecipeCard.module.css */
 
 .card {
+  font-family: 'Jua';
   background-color: #ffffff;
   /* 이미지와 유사하게 둥근 모서리 */
-  border-radius: 16px; 
+  border-radius: 20px; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden; /* 둥근 모서리 적용을 위해 */
   
@@ -75,7 +76,7 @@
 
 .title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0 0 8px 0;
   color: #222;
   text-align: start;
@@ -87,7 +88,7 @@
 }
 
 .description {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: #555;
   margin: 0;
   text-align: start;
@@ -111,8 +112,8 @@
   background-color: #f1f3f5; /* 연한 회색 */
   color: #495057;
   padding: 6px 10px;
-  border-radius: 20px; /* 이미지와 유사한 캡슐 모양 */
-  font-size: 0.8rem;
-  font-weight: 500;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 400;
   white-space: nowrap;
 }

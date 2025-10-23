@@ -46,3 +46,21 @@
   background-color: #a0a0a0;
   cursor: not-allowed;
 }
+
+.hr {
+  height: 1px;
+  background-color: #FFEC97;;
+  border: 0;
+}
+
+.buttonStyle {
+  padding: '10px 20px';
+  font-size: '1em';
+  background-color: '#007bff';
+  color: 'white';
+  border: 'none';
+  border-radius: '5px';
+  cursor: 'pointer';
+  margin-top: '20px';
+  margin-bottom: '50px';
+}
