@@ -7,17 +7,15 @@ import RecipeCard from '../components/RecipeCard/RecipeCard';
 import ClipAddModal from '../components/Modal/ClipAddModal'; // 1. [추가] 모달 import
 import styles from './RecipeListPage.module.css'; // (CSS는 RecipeListPage와 공유)
 
-// 2. [수정] API 파일(50)과 동일하게 설정
-const ITEMS_PER_PAGE = 50;
+const ITEMS_PER_PAGE = 30;
 
-// 인라인 스타일은 컴포넌트 함수 바깥으로 이동
 const containerStyle = {
     maxWidth: '1200px',
     margin: '20px auto',
     padding: '0 20px',
 };
 
-// 3. [수정] 컴포넌트 이름을 역할에 맞게 SearchPage로 변경
+
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const urlQuery = searchParams.get('q') || '';
@@ -25,8 +23,6 @@ const SearchPage = () => {
 
     const [inputTerm, setInputTerm] = useState(urlQuery);
     const [filterType, setFilterType] = useState(urlFilter);
-
-    // 4. [추가] 모달 상태 관리를 위한 useState
     const [modalRecipe, setModalRecipe] = useState(null);
 
     const {
@@ -37,7 +33,6 @@ const SearchPage = () => {
             fetchRecipesByPage({ pageParam, searchTerm: urlQuery, filterType: urlFilter }),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            // 5. [수정] ITEMS_PER_PAGE(50) 기준으로 정확하게 비교
             if (lastPage.length < ITEMS_PER_PAGE) return undefined;
             return lastPageParam + lastPage.length;
         },
@@ -53,7 +48,7 @@ const SearchPage = () => {
         setSearchParams({ q: inputTerm, filter: filterType });
     };
 
-    // 6. [추가] 모달 저장 핸들러 함수
+    // 모달 저장 핸들러 함수
     const handleSaveClip = (recipeId, comment) => {
         console.log('--- 클립 저장 (검색 페이지) ---');
         console.log('UID:', localStorage.getItem('cookclip_user_uid'));
@@ -65,8 +60,8 @@ const SearchPage = () => {
         setInputTerm(urlQuery);
         setFilterType(urlFilter);
     }, [urlQuery, urlFilter]);
-    
-    // 로딩 및 에러 처리는 return 문 이전에 위치해야 합니다.
+
+    // 로딩 및 에러 처리는
     if (isLoading) return <div>'{urlQuery}' 검색 중...</div>;
     if (error) return <div>오류: {error.message}</div>;
 
@@ -107,7 +102,7 @@ const SearchPage = () => {
                             <RecipeCard
                                 key={recipe.RCP_SEQ}
                                 recipe={recipeProps}
-                                // 7. [추가] 카드에 모달을 여는 함수 전달
+                                // 카드에 모달을 여는 함수 전달
                                 onOpenModal={() => setModalRecipe(recipeProps)}
                             />
                         );
@@ -119,14 +114,16 @@ const SearchPage = () => {
                 <button
                     onClick={() => fetchNextPage()}
                     disabled={!hasNextPage || isFetchingNextPage}
-                    // 8. [수정] 올바른 클래스 이름으로 변경
-                    className={styles.loadMoreButton} 
+                    className={styles.loadMoreButton}
                 >
-                    {isFetchingNextPage ? '불러오는 중...' : '검색 결과 더보기'}
+                    {isFetchingNextPage 
+                    ? '불러오는 중...' 
+                    :'검색 결과 더보기' 
+                    }
                 </button>
             )}
 
-            {/* 9. [추가] modalRecipe state가 있을 때 모달 렌더링 */}
+            {/* 모달 렌더링 */}
             {modalRecipe && (
                 <ClipAddModal
                     recipe={modalRecipe}
@@ -138,4 +135,4 @@ const SearchPage = () => {
     );
 };
 
-export default SearchPage; // 10. [수정] export 이름 변경
+export default SearchPage;

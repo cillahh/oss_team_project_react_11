@@ -2,65 +2,56 @@
 
 /* 1. 그리드 컨테이너 */
 .gridContainer {
-  display: grid;
-  
-  /* * 화면 너비에 맞춰 열(column) 개수를 자동으로 조절합니다.
-   * - minmax(300px, 1fr): 카드의 최소 너비는 300px, 
-   * 공간이 남으면 1fr(균등한 비율)로 채웁니다.
-   */
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  
-  /* 카드 사이의 상하/좌우 간격 */
-  gap: 24px;
-  
-  /* '더보기' 버튼과의 여백 */
-  margin-bottom: 40px;
-  margin-top: 30px;
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+    /* 카드 사이의 상하/좌우 간격 */
+    gap: 24px;
+
+    margin-bottom: 40px;
+    margin-top: 30px;
 }
 
-/* 2. '더보기' 버튼 (가운데 정렬) */
 .loadMoreButton {
-  /* * 버튼을 가운데 정렬하는 간단한 방법:
-   * 1. display: block (버튼은 기본적으로 inline-block)
-   * 2. margin: 0 auto (좌우 마진을 auto로)
-   */
-  display: block;
-  margin: 20px auto 50px auto; /* 상(20) / 좌우(auto) / 하(50) */
-
-  padding: 12px 28px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    display: block;
+    margin: 20px auto 50px auto;  /* 상(20) / 좌우(auto) / 하(50) */
+    font-family: 'Jua';
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-weight: 200;
+    background-color: #FFEC97;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .loadMoreButton:hover:not(:disabled) {
-  background-color: #0056b3;
+    background-color: #F7D840;
 }
 
 .loadMoreButton:disabled {
-  background-color: #a0a0a0;
-  cursor: not-allowed;
+    background-color: #a0a0a0;
+    cursor: not-allowed;
 }
 
 .hr {
-  height: 1px;
-  background-color: #FFEC97;;
-  border: 0;
+    height: 1px;
+    background-color: #FFEC97;
+    ;
+    border: 0;
 }
 
 .buttonStyle {
-  padding: '10px 20px';
-  font-size: '1em';
-  background-color: '#007bff';
-  color: 'white';
-  border: 'none';
-  border-radius: '5px';
-  cursor: 'pointer';
-  margin-top: '20px';
-  margin-bottom: '50px';
+    padding: '10px 20px';
+    font-size: '1em';
+    background-color: '#007bff';
+    color: 'white';
+    border: 'none';
+    border-radius: '5px';
+    cursor: 'pointer';
+    margin-top: '20px';
+    margin-bottom: '50px';
 }
