@@ -46,12 +46,12 @@ const RecipeListPage = () => {
         },
     });
 
-    if (isLoading) return <div>레시피 데이터를 불러오는 중...</div>;
-    if (error) return <div>오류: {error.message}</div>;
+    if (isLoading) return <div className={styles.noResults}>레시피 데이터를 불러오는 중...</div>;
+    if (error) return <div className={styles.noResults}>오류: {error.message}</div>;
 
     // data가 undefined일 때
     if (!data?.pages || data.pages.every(page => page.length === 0)) {
-        return <div>표시할 레시피가 없습니다.</div>;
+        return <div className={styles.noResults}>표시할 레시피가 없습니다.</div>;
     }
 
     const handleSearchSubmit = (e) => {
@@ -92,7 +92,7 @@ const RecipeListPage = () => {
                             title: recipe.RCP_NM,
                             description: recipe.RCP_PARTS_DTLS,
                             category: recipe.RCP_PAT2, 
-                            method: recipe.RCP_WAY2, // (way -> method로 변경. ClipAddModal과 맞춤)
+                            method: recipe.RCP_WAY2,
                             prepTime: recipe.INFO_WGT ? `${recipe.INFO_WGT}g` : '정보없음',
                             cookTime: recipe.INFO_ENG ? `${recipe.INFO_ENG}kcal` : '정보없음',
                             isBookmarked: false

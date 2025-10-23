@@ -44,7 +44,7 @@ const SearchComponent = ({
         />
 
         <button type="submit" className={styles.searchButton}>
-          <CiSearch size={22} />
+          <CiSearch className={styles.CiSearch} />
         </button>
       </div>
 

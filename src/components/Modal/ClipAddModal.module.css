@@ -23,14 +23,11 @@
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     width: 80%;
     max-width: 600px;
-    /* 모달 최대 너비 */
     max-height: 90vh;
-    /* 화면 높이의 90% */
     overflow-y: auto;
-    /* 내용이 길어지면 스크롤 */
 
-    /* 닫힐 때 애니메이션 (선택) */
-    animation: slideUp 0.3s ease-out;
+    animation: slideUp 0.5s ease-out;
+    box-sizing: border-box;
 }
 
 @keyframes slideUp {
@@ -53,7 +50,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #F9D639;
     padding-bottom: 16px;
     margin-bottom: 20px;
 }
@@ -147,6 +144,12 @@
     /* 세로 크기만 조절 허용 */
     font-size: 0.9rem;
     font-family: inherit;
+    box-sizing: border-box;
+}
+
+textarea:focus {
+  border-color: #F9D639;
+  outline: none;
 }
 
 /* 6. 푸터 */
@@ -159,9 +162,8 @@
     padding: 10px 24px;
     font-size: 1rem;
     font-weight: 600;
-    /* 이미지의 노란색과 유사하게 */
     background-color: #FFEC97;
-    color: #333;
+    color: #222;
     border: none;
     border-radius: 8px;
     cursor: pointer;
