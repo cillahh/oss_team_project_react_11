@@ -27,7 +27,7 @@ const RecipeCard = ({ recipe, onOpenModal }) => {
 
   return (
     // 1. 카드 전체: 클릭 시 상세 페이지로 이동
-    <Link to={`/recipe/${recipe.id}`} className={styles.card}>
+    <Link to={`/detail/${recipe.id}`} className={styles.card}>
       
       {/* 2. 이미지 섹션 */}
       <div className={styles.imageContainer}>

@@ -68,7 +68,7 @@ const SearchPage = () => {
     return (
         <div style={containerStyle}>
             <SearchComponent
-                title="레시피 검색"
+                title="검색 결과"
                 placeholder="다시 검색해보세요"
                 inputValue={inputTerm}
                 onInputChange={(e) => setInputTerm(e.target.value)}

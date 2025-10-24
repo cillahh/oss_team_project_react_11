@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './layout/Layout'; // 👈 부모가 될 레이아웃
 // import MainPage from './pages/MainPage';
-// import RecipeDetailPage from './pages/RecipeDetailPage';
+import RecipeDetailPage from './pages/RecipeDetailPage';
 // import CookclipPage from './pages/CookclipPage'; // 👈 '마이 쿡클립' 페이지
 import React, { useEffect } from 'react';
 import RecipeListPage from './pages/RecipeListPage';
 import SearchPage from './pages/SearchPage';
+import CookclipPage from './pages/CookclipPage';
 
 function App() {
 
@@ -33,8 +34,8 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<RecipeListPage />} />
         <Route path="search" element={<SearchPage />} />
-        {/* <Route path="cooclip" element={<CookclipPage />} /> */}
-        {/* <Route path="recipe/:recipeId" element={<RecipeDetailPage />} /> */}
+        <Route path="detail/:recipeId" element={<RecipeDetailPage />} />
+        <Route path="cookclip" element={<CookclipPage />} />
 
       </Route>
 

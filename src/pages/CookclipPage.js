@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
-import ClipAddModal from '../components/ClipAddModal/ClipAddModal';
+import ClipAddModal from '../components/Modal/ClipAddModal';
 import { fetchRecipesByPage } from '../api/recipeAPI';
 
 const CookclipPage = () => {

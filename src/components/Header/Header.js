@@ -22,7 +22,7 @@ const Header = () => {
         {/* 4. 오른쪽 네비게이션 (버튼) */}
         <nav className={styles.navigation}>
           {/* '/cooclip' 경로로 이동하는 링크 (버튼 스타일) */}
-          <Link to="/cooclip" className={styles.navButton}>
+          <Link to="/cookclip" className={styles.navButton}>
             <span>마이 쿡클립</span> <IoBookmark className={styles.IoBookmark} />
           </Link>
         </nav>
