@@ -14,13 +14,46 @@ const ClipAddModal = ({ recipe, onClose, onSave }) => {
   const [comment, setComment] = useState('');
 
   // 저장 버튼 클릭 시
-  const handleSaveClick = () => {
-    // 1. 부모에게 코멘트와 레시피 ID를 전달
-    // (파트너가 CRUD 구현 시 이 onSave 함수 본체를 만들 것입니다.)
-    onSave(recipe.id, comment);
-    
-    // 2. 모달 닫기
-    onClose();
+  const handleSaveClick = async () => {
+    try {
+      // 1️⃣ 로컬스토리지에서 uid 꺼내기
+      let uid = localStorage.getItem('uid');
+      if (!uid) {
+        // uid가 없으면 랜덤 생성 후 저장 (첫 방문 가정)
+        uid = crypto.randomUUID();
+        localStorage.setItem('uid', uid);
+      }
+
+      // 2️⃣ cookid는 recipe.id로 바로 사용 가능 (이미 props로 받음)
+      const cookid = recipe.id;
+
+      // 3️⃣ mockAPI로 POST 요청 보내기
+      const response = await fetch('https://68dfbc80898434f41358c319.mockapi.io/cookclip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uid,
+          cookid,
+          comment,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('데이터 저장 실패!');
+      }
+
+      const data = await response.json();
+      console.log('✅ 저장 성공:', data);
+
+      // 4️⃣ 부모 컴포넌트에도 알리기 (선택)
+      onSave(recipe.id, comment);
+
+      // 5️⃣ 모달 닫기
+      onClose();
+    } catch (err) {
+      console.error('❌ 에러 발생:', err);
+      alert('저장 중 오류가 발생했어요 😢');
+    }
   };
 
   // 모달 뒷배경 클릭 시 닫기
@@ -33,10 +66,10 @@ const ClipAddModal = ({ recipe, onClose, onSave }) => {
   return (
     // 1. 모달 뒷배경 (어둡게 처리)
     <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
-      
+
       {/* 2. 모달 컨텐츠 본체 */}
       <div className={styles.modalContent}>
-        
+
         {/* 3. 헤더: 제목, 닫기 버튼 */}
         <div className={styles.modalHeader}>
           <h2>레시피 클립 추가하기</h2>

@@ -13,6 +13,7 @@ import { FaBookmark } from "react-icons/fa"; // 북마크 선택된 아이콘
  * @param {function} props.onOpenModal - (recipe) => void. 북마크 버튼 클릭 시 호출될 함수
  */
 const RecipeCard = ({ recipe, onOpenModal }) => {
+  console.log('북마크 상태:', recipe.title, recipe.isBookmarked);
 
   // 북마크 버튼 클릭 시 상위 <Link>의 이동을 막음
   const handleBookmarkClick = (e) => {
