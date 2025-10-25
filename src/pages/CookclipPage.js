@@ -14,8 +14,8 @@ const CookclipPage = () => {
 
   // 1. MockAPI 주소
   const ITEMS_URL = 'https://68dfbc80898434f41358c319.mockapi.io/cookclip';
-  // 2. UID 키 확인 (이전에 'uid'로 사용하셨습니다)
-  const UID_KEY = 'uid'; 
+  // 2. UID 키 확인
+  const UID_KEY ='uid'; 
 
   useEffect(() => {
     const loadClips = async () => {

@@ -50,20 +50,17 @@ const RecipeDetailPage = () => {
 
 
     if (isLoading) return <div className={styles.loading}>레시피를 불러오는 중...</div>;
-    if (isError) return <div className={styles.error}>오류가 발생했습니다.</div>;
+    if (isError) return <div className={styles.error}>레시피를 불러오는 중...</div>;
     if (!recipe) return <div className={styles.error}>레시피를 찾을 수 없습니다.</div>;
 
     return (
         <div className={styles.pageContainer}>
-
-            {/* 1. [수정] 전체 너비 페이지 헤더 (흰색 배경) */}
             <header className={styles.header}>
-                {/* 헤더의 '내용물'만 중앙 정렬시킴 */}
                 <div className={styles.headerInner}>
                     <div className={styles.titleSection}>
                         <div className={styles.tags}>
-                            {recipe.RCP_PAT2 && <span className={styles.tag}>{recipe.RCP_PAT2}</span>}
-                            {recipe.RCP_WAY2 && <span className={styles.tag}>{recipe.RCP_WAY2}</span>}
+                            {recipe.RCP_PAT2 && <span className={styles.tag}>#{recipe.RCP_PAT2}</span>}
+                            {recipe.RCP_WAY2 && <span className={styles.tag}>#{recipe.RCP_WAY2}</span>}
                         </div>
                         <h3 className={styles.title}>{recipe.RCP_NM}</h3>
                     </div>
@@ -80,7 +77,7 @@ const RecipeDetailPage = () => {
             <div className={styles.contentBody}>
                 {/* 메인 이미지 */}
                 {recipe.ATT_FILE_NO_MAIN &&
-                    <img src={recipe.ATT_FILE_NO_MAIN} alt={recipe.RCP_NM} className={styles.mainImage} />
+                    <img src={recipe.ATT_FILE_NO_MK} alt={recipe.RCP_NM} className={styles.mainImage} />
                 }
 
                 {/* 재료 */}

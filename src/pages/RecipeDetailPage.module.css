@@ -7,26 +7,26 @@
   font-family: 'Jua', sans-serif;
   color: #333;
   background-color: white; /* (선택) 컨텐츠 바디 뒷배경 */
+  padding: 0px;
+  margin: 0px;
 }
 
 .loading, .error {
-  /* ... (동일) ... */
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 50px;
   font-family: 'Do Hyeon', sans-serif;
 }
 
-/* ⬇️ [수정] .header는 이제 100% 너비의 흰색 바입니다. */
 .header {
   width: 100%;
   background-color: #FFF9D5; /* 흰색 배경 */
   border-bottom: 1px solid #f0f0f0;
   padding: 60px 60px 40px 60px; /* 좌우 최소 여백 */
+  margin: 0px;
   box-sizing: border-box;
 }
 
-/* ⬇️ [신규] .headerInner: 헤더 내용물을 중앙 정렬 */
 .headerInner {
   display: flex;
   justify-content: space-between;
@@ -38,10 +38,9 @@
   margin: 0 auto; /* 중앙 정렬 */
 }
 
-/* ⬇️ [신규] .contentBody: 메인 컨텐츠를 중앙 정렬 */
 .contentBody {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 40px 20px 100px 20px; /* 상하좌우 여백 */
   background-color: #ffffff;
@@ -79,9 +78,10 @@
   color: #333;
   flex-shrink: 0;
   margin-left: 20px;
+  margin-top: 35px;
 }
 .mainImage {
-  width: 100%;
+  width: 90%;
   height: auto;
   max-height: 500px;
   object-fit: cover;

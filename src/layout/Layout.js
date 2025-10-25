@@ -1,28 +1,26 @@
 import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom'; // 1. useLocation 훅 import
+import { Outlet, useLocation } from 'react-router-dom'; // 1. useLocation import
 import Header from '../components/Header/Header';
 import styles from './Layout.module.css'; // 2. CSS 모듈 import
 
 const Layout = () => {
+  // 3. 현재 페이지 경로(pathname)를 가져옵니다.
   const location = useLocation();
-  // 3. 현재 경로가 '/cooclip'인지 확인
-  const isCookclipPage = (location.pathname === '/cookclip') || (location.pathname.startsWith === '/recipe/');
 
-  // 4. 페이지에 따라 <main> 태그에 다른 클래스 적용
-  const mainClassName = isCookclipPage
-    ? styles.mainFullWidth // 쿡클립 페이지일 때
-    : styles.mainDefault;  // 나머지 페이지일 때
+  // 4. 경로가 /cooclip 또는 /recipe/로 시작하는지 확인합니다.
+  const isFullWidthPage = location.pathname.startsWith('/cookclip') || 
+                          location.pathname.startsWith('/recipe/');
 
   return (
     <>
       <Header />
-      {/* 5. 동적으로 클래스 이름 적용 */}
-      <main className={mainClassName}>
+      {/* 5. isFullWidthPage 값에 따라 다른 className을 적용합니다. */}
+      <main className={isFullWidthPage ? styles.mainFullWidth : styles.mainDefault}>
         <Outlet />
       </main>
-      {/* <Footer /> */}
     </>
   );
 };
 
 export default Layout;
+

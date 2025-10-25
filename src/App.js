@@ -11,7 +11,7 @@ import CookclipPage from './pages/CookclipPage';
 function App() {
 
   useEffect(() => {
-    const UID_KEY = 'cookclip_user_uid';
+    const UID_KEY = 'uid';
 
     // localStorage에서 기존 UID를 불러오기
     let existingUid = localStorage.getItem(UID_KEY);
@@ -38,9 +38,6 @@ function App() {
         <Route path="cookclip" element={<CookclipPage />} />
 
       </Route>
-
-      {/* (Layout이 필요 없는 별도 페이지들) */}
-      <Route path="/cookclip" element={<CookclipPage />} />
 
       {/* <Route path="/login" element={<LoginPage />} /> */}
     </Routes>
