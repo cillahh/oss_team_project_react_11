@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchRecipesByPage } from '../api/recipeAPI';
 import SearchComponent from '../components/Search/SearchBar';
@@ -6,6 +6,9 @@ import styles from './RecipeListPage.module.css';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { useNavigate } from 'react-router-dom';
 import ClipAddModal from '../components/Modal/ClipAddModal';
+import ClipAddBookclipUpdate from './ClipAddBookclipUpdate';
+
+
 
 const ITEMS_PER_PAGE = 30;
 const containerStyle = {
@@ -21,6 +24,26 @@ const RecipeListPage = () => {
     const [modalRecipe, setModalRecipe] = useState(null);
     const [bookmarkedIds, setBookmarkedIds] = useState(new Set());
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const loadBookmarkedIds = async () => {
+            const uid = localStorage.getItem('uid');
+            if (!uid) return;
+
+            try {
+                const res = await fetch(ITEMS_URL);
+                const data = await res.json();
+                const myIds = data
+                    .filter(c => String(c.uid) === String(uid))
+                    .map(c => String(c.cookid));
+                setBookmarkedIds(new Set(myIds));
+            } catch (err) {
+                console.error('북마크 목록 불러오기 실패:', err);
+            }
+        };
+        loadBookmarkedIds();
+    }, []);
+
 
     const {
         data,
@@ -59,15 +82,18 @@ const RecipeListPage = () => {
     };
 
     const handleBookmarkClick = async (recipe) => {
-        const uid = localStorage.getItem('cookclip_user_uid') || crypto.randomUUID();
-        localStorage.setItem('cookclip_user_uid', uid);
+        const uid = localStorage.getItem('uid') || crypto.randomUUID();
+        localStorage.setItem('uid', uid);
 
         if (bookmarkedIds.has(recipe.id)) {
             // 이미 북마크 된 경우 -> 삭제
             try {
                 const res = await fetch(ITEMS_URL);
                 const clips = await res.json();
-                const myClip = clips.find(c => c.uid === uid && c.cookid === String(recipe.id));
+                const myClip = clips.find(
+                    c => String(c.uid) === String(uid) && String(c.cookid) === String(recipe.id)
+                );
+
                 if (!myClip) return;
 
                 const delRes = await fetch(`${ITEMS_URL}/${myClip.id}`, { method: 'DELETE' });
@@ -89,26 +115,8 @@ const RecipeListPage = () => {
 
 
     const handleSaveClip = async (recipeId, comment) => {
-        if (bookmarkedIds.has(recipeId)) {
-            setModalRecipe(null);
-            return; // 이미 북마크 되어있으면 바로 닫기
-        }
-
-        const uid = localStorage.getItem('cookclip_user_uid');
-        const res = await fetch(ITEMS_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ uid, cookid: recipeId, comment }),
-        });
-
-        if (!res.ok) return alert('저장 실패');
-
-        setBookmarkedIds(prev => {
-            const newSet = new Set(prev);
-            newSet.add(recipeId);
-            return newSet;
-        });
-
+        await ClipAddBookclipUpdate(recipeId, comment, modalRecipe);
+        setBookmarkedIds(prev => new Set(prev).add(recipeId));
         setModalRecipe(null);
     };
 
