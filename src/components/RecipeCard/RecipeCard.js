@@ -41,7 +41,7 @@ const RecipeCard = ({ recipe, onBookmarkClick }) => {
           onClick={handleBookmarkClick}
           aria-label="북마크"
         >
-          {recipe.isBookmarked ? <FaBookmark size={22} /> : <CiBookmark size={24} />}
+          {recipe.isBookmarked ? <FaBookmark size={21} /> : <CiBookmark size={24} />}
         </button>
       </div>
 
