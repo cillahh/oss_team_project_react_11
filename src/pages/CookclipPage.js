@@ -71,6 +71,7 @@ const CookclipPage = () => {
   return (
     <div>
       <h1>🍳 레시피 목록 {recipes.length}</h1>
+      
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
