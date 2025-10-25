@@ -58,3 +58,31 @@ export const fetchRecipesByPage = async ({
   // 실제 레시피 배열 반환
   return data.COOKRCP01.row;
 };
+
+
+
+// --- [신규 함수 추가] ---
+/**
+ * COOKRCP01 API에서 제공하는 모든 레시피(1~1000)를 한 번에 불러옵니다.
+ * 이 함수는 React-Query에 의해 캐시됩니다.
+ * (CookclipPage, RecipeDetailPage에서 사용)
+ */
+export const fetchAllRecipes = async () => {
+  const startIndex = 1;
+  const endIndex = 300; // API가 1회 호출로 허용하는 최대치
+  const url = `https://openapi.foodsafetykorea.go.kr/api/${API_KEY}/COOKRCP01/json/${startIndex}/${endIndex}`;
+  
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('전체 레시피 로드 실패: 네트워크 응답 오류');
+  }
+
+  const data = await response.json();
+
+  if (data.COOKRCP01.RESULT && data.COOKRCP01.RESULT.CODE !== 'INFO-000') {
+    if (data.COOKRCP01.RESULT.CODE === 'INFO-200') return [];
+    throw new Error(data.COOKRCP01.RESULT.MSG);
+  }
+  
+  return data.COOKRCP01.row || [];
+};

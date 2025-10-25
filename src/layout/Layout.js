@@ -6,7 +6,7 @@ import styles from './Layout.module.css'; // 2. CSS 모듈 import
 const Layout = () => {
   const location = useLocation();
   // 3. 현재 경로가 '/cooclip'인지 확인
-  const isCookclipPage = location.pathname === '/cookclip';
+  const isCookclipPage = (location.pathname === '/cookclip') || (location.pathname.startsWith === '/recipe/');
 
   // 4. 페이지에 따라 <main> 태그에 다른 클래스 적용
   const mainClassName = isCookclipPage

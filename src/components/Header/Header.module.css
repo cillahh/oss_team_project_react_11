@@ -7,7 +7,6 @@
   border-bottom: 1px solid #eaeaea; /* 하단 얇은 테두리 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
   height: 55px;
-  /* padding: 8px 0px; */
   position: sticky; /* 스크롤 시 상단에 고정 (선택 사항) */
   top: 0;
   z-index: 100;

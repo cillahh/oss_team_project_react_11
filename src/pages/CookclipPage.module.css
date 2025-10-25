@@ -1,11 +1,11 @@
 .pageContainer {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 260px 1fr;
   height: calc(100vh - 55px);
 }
 
 .sidebar {
-  background-color: #f8f9fa;
+  background-color: #FFFCEA;
   padding: 40px 24px;
 
   overflow-y: auto;

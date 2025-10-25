@@ -18,28 +18,16 @@ const UserProfileSidebar = () => {
         <div className={styles.sidebarBox}>
             {/* 1. 프로필 이미지 영역 */}
             <div className={styles.profileImage}>
-                <FaUserCircle size={60} />
+                <FaUserCircle size={75} />
             </div>
             
             {/* 2. 유저 정보 */}
-            <h3 className={styles.username}>방문자</h3>
+            <h3 className={styles.username}>방문자 님</h3>
             
             <p className={styles.uidLabel}>고유 ID</p>
             <span className={styles.uidValue}>
                 {uid ? uid : 'ID를 불러오는 중...'}
             </span>
-
-            {/* 3. 쿡클립 통계 (나중에 구현) */}
-            <div className={styles.statsContainer}>
-                <div className={styles.statItem}>
-                    <span>총 쿡클립</span>
-                    <strong>0</strong> 
-                </div>
-                <div className={styles.statItem}>
-                    <span>내 코멘트</span>
-                    <strong>0</strong>
-                </div>
-            </div>
         </div>
     );
 };
