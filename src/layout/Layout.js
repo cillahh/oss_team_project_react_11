@@ -1,29 +1,26 @@
-// src/layout/Layout.js
-
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from '../components/Header/Header'; // 방금 만든 Header 컴포넌트 경로
-// import Footer from '../components/Footer/Footer'; // (나중에 푸터를 만든다면 추가)
+import { Outlet, useLocation } from 'react-router-dom'; // 1. useLocation import
+import Header from '../components/Header/Header';
+import styles from './Layout.module.css'; // 2. CSS 모듈 import
 
 const Layout = () => {
+  // 3. 현재 페이지 경로(pathname)를 가져옵니다.
+  const location = useLocation();
+
+  // 4. 경로가 /cooclip 또는 /recipe/로 시작하는지 확인합니다.
+  const isFullWidthPage = location.pathname.startsWith('/cookclip') || 
+                          location.pathname.startsWith('/recipe/');
+
   return (
     <>
-      {/* 1. 모든 페이지 상단에 고정될 헤더 */}
       <Header />
-
-      {/* 2. 페이지의 실제 내용이 렌더링될 영역 */}
-      <main>
-        {/* <Outlet />은 App.js에서 Layout 라우트의
-          자식으로 있는 컴포넌트(MainPage, CooclipPage 등)가
-          이 자리에 렌더링되도록 해주는 표지판입니다.
-        */}
+      {/* 5. isFullWidthPage 값에 따라 다른 className을 적용합니다. */}
+      <main className={isFullWidthPage ? styles.mainFullWidth : styles.mainDefault}>
         <Outlet />
       </main>
-
-      {/* 3. (선택) 모든 페이지 하단에 고정될 푸터 */}
-      {/* <Footer /> */}
     </>
   );
 };
 
 export default Layout;
+

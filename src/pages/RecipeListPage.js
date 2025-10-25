@@ -27,7 +27,7 @@ const RecipeListPage = () => {
 
     useEffect(() => {
         const loadBookmarkedIds = async () => {
-            const uid = localStorage.getItem('uid');
+            const uid = localStorage.getItem('uid'); 
             if (!uid) return;
 
             try {
@@ -53,12 +53,21 @@ const RecipeListPage = () => {
         isFetchingNextPage,
         fetchNextPage,
     } = useInfiniteQuery({
-        queryKey: ['allRecipes'],
+        queryKey: ['paginatedRecipes'],
         queryFn: ({ pageParam = 1 }) =>
             fetchRecipesByPage({ pageParam, searchTerm: '', filterType: 'recipe' }),
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            if (lastPage.length < ITEMS_PER_PAGE) return undefined;
+            // 3. ⬇️ [방어 코드] 
+            // lastPage가 undefined일 경우(queryFn이 실수로 return을 안 하는 등)를 대비합니다.
+            if (!lastPage || lastPage.length === 0) {
+                return undefined;
+            }
+            // 4. [수정] 30이 아닌 API 기준(50)으로 비교합니다.
+            if (lastPage.length < ITEMS_PER_PAGE) {
+                return undefined;
+            }
+
             return lastPageParam + lastPage.length;
         },
     });

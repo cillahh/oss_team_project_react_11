@@ -6,10 +6,12 @@
   background-color: #FFEC97;
   border-bottom: 1px solid #eaeaea; /* 하단 얇은 테두리 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
-  padding: 8px 0; /* 상하 여백 */
+  height: 55px;
   position: sticky; /* 스크롤 시 상단에 고정 (선택 사항) */
   top: 0;
   z-index: 100;
+  display: flex;
+  align-items: center;
 }
 
 /* 2. 내용물 컨테이너 (핵심 레이아웃) */
@@ -17,6 +19,7 @@
   max-width: 1200px; /* 웹사이트 최대 넓이 */
   margin: 0 auto; /* 중앙 정렬 */
   padding: 0 20px; /* 좌우 여백 */
+  width: 100%; 
   
   display: flex;
   justify-content: space-between; /* 👈 로고와 버튼을 양 끝으로! */

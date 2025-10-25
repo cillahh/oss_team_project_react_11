@@ -1,0 +1,62 @@
+.pageContainer {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: calc(100vh - 55px);
+}
+
+.sidebar {
+  background-color: #FFFCEA;
+  padding: 40px 24px;
+
+  overflow-y: auto;
+  box-sizing: border-box; 
+}
+
+.mainContent {
+  padding: 40px 160px 40px 40px; 
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.title {
+    font-family: 'Do Hyeon';
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 10px;
+    color: #343a40;
+    white-space: nowrap;
+}
+
+.hr {
+    height: 1px;
+    background-color: #FFEC97;
+    ;
+    border: 0;
+    margin-bottom: 30px;
+}
+
+.length {
+    color: #F9D639;
+}
+
+/* 모바일 반응형  */
+@media (max-width: 768px) {
+  .pageContainer {
+    grid-template-columns: 1fr; 
+    height: auto; /* [수정] 높이 고정 해제 */
+  }
+
+  .sidebar {
+    height: auto; /* [수정] 높이 고정 해제 */
+    overflow-y: visible; /* [수정] 내부 스크롤 해제 */
+    padding: 24px 20px;
+  }
+
+  .mainContent {
+    height: auto; /* [수정] 높이 고정 해제 */
+    overflow-y: visible; /* [수정] 내부 스크롤 해제 */
+    padding: 40px 20px;
+  }
+}
+

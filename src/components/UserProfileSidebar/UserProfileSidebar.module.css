@@ -1,0 +1,50 @@
+.sidebarBox {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.profileImage {
+    margin-bottom: 16px;
+    color: #adb5bd; /* 아이콘 회색 */
+}
+
+.username {
+    margin: 0 0 4px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.uidLabel {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.uidValue {
+    font-size: 0.75rem;
+    color: #adb5bd;
+    word-break: break-all; /* 긴 UID가 튀어나가지 않도록 줄바꿈 */
+    line-height: 1.4;
+}
+
+.statsContainer {
+    margin-top: 24px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+}
+
+.statItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #343a40;
+}
+.statItem:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+.statItem strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+}

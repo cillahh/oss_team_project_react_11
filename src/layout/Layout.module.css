@@ -1,0 +1,16 @@
+/* 1. 기본 페이지 레이아웃 (기존 index.css의 main 스타일) */
+.mainDefault {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* 2. CookclipPage를 위한 전체 너비 레이아웃 */
+.mainFullWidth {
+    width: 100%;
+    margin: 0;
+    max-width: none;
+
+    /* 상하 패딩은 유지하되, 좌우 패딩은 0으로 설정 */
+    padding: 0px;
+}

@@ -69,8 +69,12 @@
 
 /* 북마크 활성화 시 스타일 */
 .bookmarkButton.bookmarked {
-  background-color: #007bff; /* (헤더와 동일한 파란색) */
-  /* 이미지의 초록색을 쓰려면: #2db400 */
+  background-color: rgb(255, 236, 151, 0.6); /* (헤더와 동일한 파란색) */
+  color: white;
+}
+
+.bookmarkButton.bookmarked:hover {
+  background-color: #F9D639;
 }
 
 /* 4. 컨텐츠 섹션 */
