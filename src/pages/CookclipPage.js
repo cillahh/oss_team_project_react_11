@@ -59,7 +59,7 @@ const CookclipPage = () => {
 
       // UI 갱신
       setRecipes(prev =>
-        prev.map(r => r.id === recipe.id ? { ...r, isBookmarked: false, clipId: null } : r)
+        prev.filter(r => r.id !== recipe.id)
       );
     } catch (err) {
       console.error(err);
@@ -67,9 +67,11 @@ const CookclipPage = () => {
     }
   };
 
+
   return (
     <div>
-      <h1>🍳 레시피 목록</h1>
+      <h1>🍳 레시피 목록 {recipes.length}</h1>
+      
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
@@ -79,6 +81,7 @@ const CookclipPage = () => {
           <RecipeCard
             key={recipe.id}
             recipe={recipe}
+            onBookmarkClick={() => handleDeleteClip(recipe)}
           />
         ))}
       </div>
