@@ -6,6 +6,7 @@ import Layout from './layout/Layout'; // 👈 부모가 될 레이아웃
 import React, { useEffect } from 'react';
 import RecipeListPage from './pages/RecipeListPage';
 import SearchPage from './pages/SearchPage';
+import CookclipPage from './pages/CookclipPage';
 
 function App() {
 
@@ -39,6 +40,8 @@ function App() {
       </Route>
 
       {/* (Layout이 필요 없는 별도 페이지들) */}
+      <Route path="/cookclip" element={<CookclipPage />} />
+
       {/* <Route path="/login" element={<LoginPage />} /> */}
     </Routes>
   );

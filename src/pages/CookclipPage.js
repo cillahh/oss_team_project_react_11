@@ -1,6 +1,8 @@
+// src/pages/CookclipPage.js
+
 import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
-import ClipAddModal from '../components/ClipAddModal/ClipAddModal';
+import ClipAddModal from '../components/Modal/ClipAddModal';
 import { fetchRecipesByPage } from '../api/recipeAPI';
 
 const CookclipPage = () => {
@@ -9,34 +11,40 @@ const CookclipPage = () => {
 
   const ITEMS_URL = 'https://68dfbc80898434f41358c319.mockapi.io/cookclip';
 
+  // 1️⃣ 전체 레시피 불러오기 + 내 북마크 적용
   useEffect(() => {
-  const loadAll = async () => {
-    try {
-      const data = await fetchRecipesByPage({ pageParam: 1 });
-      setRecipes(data.map(r => ({ ...r, isBookmarked: false, clipId: null })));
+    const loadAll = async () => {
+      try {
+        // 전체 레시피 불러오기
+        const data = await fetchRecipesByPage({ pageParam: 1 });
+        setRecipes(data.map(r => ({ ...r, isBookmarked: false, clipId: null })));
 
-      // 레시피가 다 로드된 후 북마크 상태 적용
-      let uid = localStorage.getItem('uid');
-      if (!uid) return;
+        // 내 uid 가져오기
+        let uid = localStorage.getItem('uid');
+        if (!uid) return;
 
-      const res = await fetch('https://68dfbc80898434f41358c319.mockapi.io/cookclip');
-      const clips = await res.json();
-      const myClips = clips.filter(c => c.uid === uid);
+        // 내 북마크 불러오기
+        const res = await fetch(ITEMS_URL);
+        const clips = await res.json();
+        const myClips = clips.filter(c => c.uid === uid);
 
-      setRecipes(prev =>
-        prev.map(r => {
-          const clip = myClips.find(c => c.cookid === String(r.id));
-          if (clip) return { ...r, isBookmarked: true, clipId: clip.id };
-          return r;
-        })
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  loadAll();
-}, []);
+        // 레시피에 isBookmarked + clipId 적용
+        setRecipes(prev =>
+          prev.map(r => {
+            const clip = myClips.find(c => c.cookid === String(r.id));
+            if (clip) return { ...r, isBookmarked: true, clipId: clip.id };
+            return r;
+          })
+        );
+      } catch (err) {
+        console.error('❌ 레시피 또는 북마크 불러오기 실패:', err);
+      }
+    };
 
+    loadAll();
+  }, []);
+
+  // 2️⃣ 카드 클릭 시
   const handleOpenModal = (recipe) => {
     if (recipe.isBookmarked) {
       // 이미 북마크 되어있으면 바로 삭제
@@ -49,6 +57,7 @@ const CookclipPage = () => {
 
   const handleCloseModal = () => setSelectedRecipe(null);
 
+  // 3️⃣ ClipAddModal 저장 시
   const handleSaveClip = async (recipeId, comment) => {
     try {
       let uid = localStorage.getItem('uid');
@@ -57,8 +66,7 @@ const CookclipPage = () => {
         localStorage.setItem('uid', uid);
       }
 
-      const recipe = recipes.find(r => r.id === recipeId);
-
+      // POST 요청
       const res = await fetch(ITEMS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,6 +89,7 @@ const CookclipPage = () => {
     }
   };
 
+  // 4️⃣ 이미 북마크 된 카드 클릭 시 삭제
   const handleDeleteClip = async (recipe) => {
     try {
       if (!recipe.clipId) return;

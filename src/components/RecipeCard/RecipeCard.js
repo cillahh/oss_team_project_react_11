@@ -10,23 +10,21 @@ import { FaBookmark } from "react-icons/fa"; // 북마크 선택된 아이콘
  * RecipeCard 컴포넌트
  * @param {object} props
  * @param {object} props.recipe - 레시피 데이터 객체
- * @param {function} props.onOpenModal - (recipe) => void. 북마크 버튼 클릭 시 호출될 함수
+ * @param {function} props.onBookmarkClick - (recipe) => void. 북마크 버튼 클릭 시 호출될 함수
  */
-const RecipeCard = ({ recipe, onOpenModal }) => {
+const RecipeCard = ({ recipe, onBookmarkClick }) => {
   console.log('북마크 상태:', recipe.title, recipe.isBookmarked);
 
   // 북마크 버튼 클릭 시 상위 <Link>의 이동을 막음
   const handleBookmarkClick = (e) => {
     e.preventDefault(); // <Link>의 기본 동작(페이지 이동)을 막음
     e.stopPropagation(); // 이벤트가 부모(카드)로 전파되는 것을 막음
-    
-    // 부모로부터 받은 onOpenModal 함수를 호출하며,
+    onBookmarkClick(recipe);
+    // 부모로부터 받은 onBookmarkClick 함수를 호출하며,
     // 이 카드의 레시피 데이터를 전달합니다.
-    onOpenModal(recipe);
   };
 
   return (
-    // 1. 카드 전체: 클릭 시 상세 페이지로 이동
     <Link to={`/recipe/${recipe.id}`} className={styles.card}>
       
       {/* 2. 이미지 섹션 */}
