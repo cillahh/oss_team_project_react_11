@@ -40,6 +40,8 @@ function App() {
       </Route>
 
       {/* (Layout이 필요 없는 별도 페이지들) */}
+      <Route path="/cookclip" element={<CookclipPage />} />
+
       {/* <Route path="/login" element={<LoginPage />} /> */}
     </Routes>
   );

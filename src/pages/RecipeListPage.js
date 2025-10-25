@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchRecipesByPage } from '../api/recipeAPI'; // API 호출 함수
+import { fetchRecipesByPage } from '../api/recipeAPI';
 import SearchComponent from '../components/Search/SearchBar';
 import styles from './RecipeListPage.module.css';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { useNavigate } from 'react-router-dom';
-import ClipAddModal from '../components/Modal/ClipAddModal'; // 1. [수정] 모달 import 추가
+import ClipAddModal from '../components/Modal/ClipAddModal';
 
-// 2. [수정] API 파일(50)과 동일하게 설정
-const ITEMS_PER_PAGE = 30; 
-
-// 3. [수정] 인라인 스타일은 컴포넌트 함수 바깥으로 이동 (효율성)
+const ITEMS_PER_PAGE = 30;
 const containerStyle = {
     maxWidth: '1200px',
     margin: '20px auto',
     padding: '0 20px',
-    // textAlign: 'center'는 gridContainer 때문에 불필요할 수 있음
 };
+const ITEMS_URL = 'https://68dfbc80898434f41358c319.mockapi.io/cookclip';
 
 const RecipeListPage = () => {
     const [inputTerm, setInputTerm] = useState('');
     const [filterType, setFilterType] = useState('recipe');
     const [modalRecipe, setModalRecipe] = useState(null);
+    const [bookmarkedIds, setBookmarkedIds] = useState(new Set());
     const navigate = useNavigate();
 
     const {
@@ -32,43 +30,89 @@ const RecipeListPage = () => {
         isFetchingNextPage,
         fetchNextPage,
     } = useInfiniteQuery({
-        queryKey: ['allRecipes'], 
-        
-        queryFn: ({ pageParam = 1 }) => 
+        queryKey: ['allRecipes'],
+        queryFn: ({ pageParam = 1 }) =>
             fetchRecipesByPage({ pageParam, searchTerm: '', filterType: 'recipe' }),
-            
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            if (lastPage.length < ITEMS_PER_PAGE) {
-                return undefined;
-            }
+            if (lastPage.length < ITEMS_PER_PAGE) return undefined;
             return lastPageParam + lastPage.length;
         },
     });
 
-    if (isLoading) return <div className={styles.noResults}>레시피 데이터를 불러오는 중...</div>;
-    if (error) return <div className={styles.noResults}>오류: {error.message}</div>;
-
-    // data가 undefined일 때
-    if (!data?.pages || data.pages.every(page => page.length === 0)) {
-        return <div className={styles.noResults}>표시할 레시피가 없습니다.</div>;
-    }
+    const allRecipes = data?.pages?.flatMap((page) =>
+        page.map((r) => ({
+            id: r.RCP_SEQ,
+            imageUrl: r.ATT_FILE_NO_MAIN,
+            title: r.RCP_NM,
+            description: r.RCP_PARTS_DTLS,
+            category: r.RCP_PAT2,
+            method: r.RCP_WAY2,
+            clipId: null,
+        }))
+    ) || [];
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        if (!inputTerm.trim()) {
-            alert('검색어를 입력해주세요.');
-            return;
-        }
+        if (!inputTerm.trim()) return alert('검색어를 입력해주세요.');
         navigate(`/search?q=${inputTerm}&filter=${filterType}`);
     };
 
-    const handleSaveClip = (recipeId, comment) => {
-        console.log('--- 클립 저장 ---');
-        console.log('UID:', localStorage.getItem('cookclip_user_uid'));
-        console.log('Recipe ID:', recipeId);
-        console.log('Comment:', comment);
+    const handleBookmarkClick = async (recipe) => {
+        const uid = localStorage.getItem('cookclip_user_uid') || crypto.randomUUID();
+        localStorage.setItem('cookclip_user_uid', uid);
+
+        if (bookmarkedIds.has(recipe.id)) {
+            // 이미 북마크 된 경우 -> 삭제
+            try {
+                const res = await fetch(ITEMS_URL);
+                const clips = await res.json();
+                const myClip = clips.find(c => c.uid === uid && c.cookid === String(recipe.id));
+                if (!myClip) return;
+
+                const delRes = await fetch(`${ITEMS_URL}/${myClip.id}`, { method: 'DELETE' });
+                if (!delRes.ok) return alert('삭제 실패');
+
+                setBookmarkedIds(prev => {
+                    const newSet = new Set(prev);
+                    newSet.delete(recipe.id);
+                    return newSet;
+                });
+
+            } catch (err) {
+                console.error(err);
+            }
+        } else if (!modalRecipe) { // ✅ 이미 모달이 열려있으면 무시
+            setModalRecipe(recipe);
+        }
     };
+
+
+    const handleSaveClip = async (recipeId, comment) => {
+        if (bookmarkedIds.has(recipeId)) {
+            setModalRecipe(null);
+            return; // 이미 북마크 되어있으면 바로 닫기
+        }
+
+        const uid = localStorage.getItem('cookclip_user_uid');
+        const res = await fetch(ITEMS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uid, cookid: recipeId, comment }),
+        });
+
+        if (!res.ok) return alert('저장 실패');
+
+        setBookmarkedIds(prev => {
+            const newSet = new Set(prev);
+            newSet.add(recipeId);
+            return newSet;
+        });
+
+        setModalRecipe(null);
+    };
+
+
 
     return (
         <div style={containerStyle}>
@@ -81,42 +125,34 @@ const RecipeListPage = () => {
                 onFilterChange={(e) => setFilterType(e.target.value)}
                 onSearchSubmit={handleSearchSubmit}
             />
-            <hr className={styles.hr}></hr>
-            
-            <div className={styles.gridContainer}>
-                {data?.pages?.flatMap((pageData) =>
-                    pageData.map((recipe) => {
-                        const recipeProps = {
-                            id: recipe.RCP_SEQ,
-                            imageUrl: recipe.ATT_FILE_NO_MAIN,
-                            title: recipe.RCP_NM,
-                            description: recipe.RCP_PARTS_DTLS,
-                            category: recipe.RCP_PAT2, 
-                            method: recipe.RCP_WAY2,
-                            prepTime: recipe.INFO_WGT ? `${recipe.INFO_WGT}g` : '정보없음',
-                            cookTime: recipe.INFO_ENG ? `${recipe.INFO_ENG}kcal` : '정보없음',
-                            isBookmarked: false
-                        };
+            <hr className={styles.hr} />
+            {isLoading ? (
+                <div className={styles.noResults}>레시피 데이터를 불러오는 중...</div>
+            ) : error ? (
+                <div className={styles.noResults}>오류: {error.message}</div>
+            ) : !allRecipes.length ? (
+                <div className={styles.noResults}>표시할 레시피가 없습니다.</div>
+            ) : (
+                <div className={styles.gridContainer}>
+                    {allRecipes.map((recipe) => (
+                        <RecipeCard
+                            key={recipe.id}
+                            recipe={{ ...recipe, isBookmarked: bookmarkedIds.has(recipe.id) }}
+                            onBookmarkClick={() => handleBookmarkClick(recipe)}
+                        />
+                    ))}
+                </div>
+            )}
 
-                        return <RecipeCard 
-                                    key={recipe.RCP_SEQ} 
-                                    recipe={recipeProps} 
-                                    onOpenModal={() => setModalRecipe(recipeProps)} 
-                                />;
-                    })
-                )}
-            </div>
-
-            {/* 더보기 버튼 */}
-            {hasNextPage&&(<button
-                onClick={() => fetchNextPage()}
-                disabled={!hasNextPage || isFetchingNextPage}
-                className={styles.loadMoreButton} 
-            >
-                {isFetchingNextPage
-                    ? '레시피 불러오는 중...'
-                    : '더보기'}
-            </button>)}
+            {hasNextPage && (
+                <button
+                    onClick={() => fetchNextPage()}
+                    disabled={!hasNextPage || isFetchingNextPage}
+                    className={styles.loadMoreButton}
+                >
+                    {isFetchingNextPage ? '레시피 불러오는 중...' : '더보기'}
+                </button>
+            )}
 
             {modalRecipe && (
                 <ClipAddModal
