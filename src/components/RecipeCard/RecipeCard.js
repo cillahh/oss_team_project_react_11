@@ -25,6 +25,7 @@ const RecipeCard = ({ recipe, onBookmarkClick }) => {
   };
 
   return (
+    // 1. 카드 전체: 클릭 시 상세 페이지로 이동
     <Link to={`/recipe/${recipe.id}`} className={styles.card}>
       
       {/* 2. 이미지 섹션 */}
