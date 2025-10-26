@@ -6,12 +6,14 @@
   width: 100%;
   font-family: 'Jua', sans-serif;
   color: #333;
-  background-color: white; /* (선택) 컨텐츠 바디 뒷배경 */
+  background-color: white;
+  /* (선택) 컨텐츠 바디 뒷배경 */
   padding: 0px;
   margin: 0px;
 }
 
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   font-size: 1rem;
   padding: 50px;
@@ -20,9 +22,11 @@
 
 .header {
   width: 100%;
-  background-color: #FFF9D5; /* 흰색 배경 */
+  background-color: #FFF9D5;
+  /* 흰색 배경 */
   border-bottom: 1px solid #f0f0f0;
-  padding: 60px 60px 40px 60px; /* 좌우 최소 여백 */
+  padding: 60px 60px 40px 60px;
+  /* 좌우 최소 여백 */
   margin: 0px;
   box-sizing: border-box;
 }
@@ -32,17 +36,20 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
-  
+
   width: 100%;
-  max-width: 700px; /* 컨텐츠 최대 너비 */
-  margin: 0 auto; /* 중앙 정렬 */
+  max-width: 700px;
+  /* 컨텐츠 최대 너비 */
+  margin: 0 auto;
+  /* 중앙 정렬 */
 }
 
 .contentBody {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 40px 20px 100px 20px; /* 상하좌우 여백 */
+  padding: 0px 20px 100px 20px;
+  /* 상하좌우 여백 */
   background-color: #ffffff;
 }
 
@@ -55,6 +62,7 @@
   gap: 8px;
   margin-bottom: 8px;
 }
+
 .tag {
   background-color: #FFEC97;
   color: #5C3A21;
@@ -63,6 +71,7 @@
   font-size: 0.9rem;
   font-weight: 400;
 }
+
 .title {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 2rem;
@@ -70,6 +79,7 @@
   margin: 0;
   line-height: 1.3;
 }
+
 .bookmarkButton {
   background: none;
   border: none;
@@ -80,29 +90,32 @@
   margin-left: 20px;
   margin-top: 35px;
 }
+
 .mainImage {
   width: 90%;
   height: auto;
   max-height: 500px;
   object-fit: cover;
   border-radius: 16px;
-  margin-bottom: 40px;
+  margin-top: 20px;
   background-color: #f8f8f8;
 }
+
 .section {
   margin-top: 40px;
   border-radius: 16px;
-  border : 1px solid #f0f0f0;
+  border: 1px solid #f0f0f0;
   padding: 20px;
 }
+
 .subTitle {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 1.3rem;
   font-weight: 400;
-  margin: 0 0 20px 0;
-  border-bottom: 2px solid #f0f0f0;
+  margin: 0 0 5px 0;
   padding-bottom: 12px;
 }
+
 .ingredientsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -111,15 +124,18 @@
   color: #222;
   padding: 0 10px;
 }
+
 .ingredientItem {
   list-style-type: '•  ';
   padding-left: 8px;
 }
+
 .ingredientItem strong {
-    color: #555;
-    font-weight: 400;
-    margin-left: 8px;
+  color: #555;
+  font-weight: 400;
+  margin-left: 8px;
 }
+
 .stepsList {
   display: flex;
   flex-direction: column;
@@ -127,17 +143,20 @@
   padding-left: 10px;
   list-style: none;
 }
+
 .stepItem {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .stepTitle {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 1.2rem;
   color: #000;
   font-weight: 400;
 }
+
 .stepDescription {
   font-size: 1rem;
   color: #555;
@@ -145,38 +164,90 @@
   margin: 0;
   white-space: pre-wrap;
 }
+
 .stepImage {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    border-radius: 12px;
-    object-fit: cover;
-    background-color: #f8f8f8;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: #f8f8f8;
 }
+
+.memoSection {
+  margin-top: 40px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  padding: 20px;
+}
+
+
+.commentContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start; 
+  gap: 10px; /* 버튼과 textarea 사이 간격 */
+}
+
+.commentHeader {
+  flex-shrink: 0;
+}
+
+.commentBox textarea {
+  font-family: 'Jua';
+  flex-grow: 1; 
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.3;
+}
+
+.commentButton {
+  background-color: rgb(0, 0, 0, 0);
+  color: #222;
+  border: none;
+  text-decoration: underline;
+}
+
+.commentButton:hover {
+  background-color: rgb(0, 0, 0, 0.1);
+  color: #222;
+  border: none;
+  border-radius: 5px;
+  text-decoration: underline;
+}
+
 
 /* 모바일 반응형 */
 @media (max-width: 600px) {
+
   /* [수정] .contentBody의 패딩을 조절 */
   .contentBody {
     padding: 20px 15px 50px 15px;
   }
+
   .headerInner {
     flex-direction: column-reverse;
     align-items: flex-end;
     gap: 12px;
   }
+
   .titleSection {
     width: 100%;
   }
+
   .bookmarkButton {
     margin-left: 0;
   }
+
   .title {
     font-size: 2rem;
   }
+
   .ingredientsList {
     grid-template-columns: 1fr;
     font-size: 1rem;
   }
 }
-
