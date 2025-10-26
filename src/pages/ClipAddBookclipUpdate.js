@@ -1,7 +1,7 @@
 
 const ITEMS_URL = 'https://68dfbc80898434f41358c319.mockapi.io/cookclip';
 
-export default async function ClipAddBookclipUpdate(recipeId, comment, recipeData) {
+export default async function ClipAddBookclipUpdate(recipeId, comment) {
     try {
         let uid = localStorage.getItem('uid');
         if (!uid) {
@@ -12,7 +12,7 @@ export default async function ClipAddBookclipUpdate(recipeId, comment, recipeDat
         const res = await fetch(ITEMS_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ uid, cookid: recipeId, comment, recipeData }),
+            body: JSON.stringify({ uid, cookid: recipeId, comment }),
         });
 
         if (!res.ok) throw new Error('북마크 저장 실패');

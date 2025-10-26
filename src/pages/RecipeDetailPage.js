@@ -192,7 +192,6 @@ const RecipeDetailPage = () => {
                                             });
 
                                             if (!res.ok) throw new Error('업데이트 실패');
-                                            alert('코멘트가 수정되었습니다!');
                                             setIsEditing(false);
                                         } catch (err) {
                                             console.error(err);
