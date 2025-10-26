@@ -4,17 +4,18 @@ import { useSearchParams } from 'react-router-dom';
 import { fetchRecipesByPage } from '../api/recipeAPI';
 import SearchComponent from '../components/Search/SearchBar';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
-import ClipAddModal from '../components/Modal/ClipAddModal'; // 1. [추가] 모달 import
-import styles from './RecipeListPage.module.css'; // (CSS는 RecipeListPage와 공유)
+import ClipAddModal from '../components/Modal/ClipAddModal';
+import ClipAddBookclipUpdate from './ClipAddBookclipUpdate';
+import styles from './RecipeListPage.module.css';
 
 const ITEMS_PER_PAGE = 30;
+const ITEMS_URL = 'https://68dfbc80898434f41358c319.mockapi.io/cookclip';
 
 const containerStyle = {
     maxWidth: '1200px',
     margin: '20px auto',
     padding: '0 20px',
 };
-
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +25,29 @@ const SearchPage = () => {
     const [inputTerm, setInputTerm] = useState(urlQuery);
     const [filterType, setFilterType] = useState(urlFilter);
     const [modalRecipe, setModalRecipe] = useState(null);
+    const [bookmarkedIds, setBookmarkedIds] = useState(new Set());
 
+    // ✅ 유저 북마크 불러오기
+    useEffect(() => {
+        const loadBookmarkedIds = async () => {
+            const uid = localStorage.getItem('uid');
+            if (!uid) return;
+
+            try {
+                const res = await fetch(ITEMS_URL);
+                const data = await res.json();
+                const myIds = data
+                    .filter(c => String(c.uid) === String(uid))
+                    .map(c => String(c.cookid));
+                setBookmarkedIds(new Set(myIds));
+            } catch (err) {
+                console.error('북마크 목록 불러오기 실패:', err);
+            }
+        };
+        loadBookmarkedIds();
+    }, []);
+
+    // ✅ 무한 스크롤 쿼리
     const {
         data, error, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage,
     } = useInfiniteQuery({
@@ -39,6 +62,7 @@ const SearchPage = () => {
         enabled: urlQuery.trim() !== '',
     });
 
+    // ✅ 검색 실행
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (!inputTerm.trim()) {
@@ -48,22 +72,66 @@ const SearchPage = () => {
         setSearchParams({ q: inputTerm, filter: filterType });
     };
 
-    // 모달 저장 핸들러 함수
-    const handleSaveClip = (recipeId, comment) => {
-        console.log('--- 클립 저장 (검색 페이지) ---');
-        console.log('UID:', localStorage.getItem('cookclip_user_uid'));
-        console.log('Recipe ID:', recipeId);
-        console.log('Comment:', comment);
+    // ✅ 북마크 토글
+    const handleBookmarkClick = async (recipe) => {
+        const uid = localStorage.getItem('uid') || crypto.randomUUID();
+        localStorage.setItem('uid', uid);
+
+        if (bookmarkedIds.has(recipe.id)) {
+            // 이미 북마크 된 경우 → 삭제
+            try {
+                const res = await fetch(ITEMS_URL);
+                const clips = await res.json();
+                const myClip = clips.find(
+                    c => String(c.uid) === String(uid) && String(c.cookid) === String(recipe.id)
+                );
+
+                if (!myClip) return;
+
+                const delRes = await fetch(`${ITEMS_URL}/${myClip.id}`, { method: 'DELETE' });
+                if (!delRes.ok) return alert('삭제 실패');
+
+                setBookmarkedIds(prev => {
+                    const newSet = new Set(prev);
+                    newSet.delete(recipe.id);
+                    return newSet;
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        } else if (!modalRecipe) {
+            // 새 북마크 추가 → 모달 열기
+            setModalRecipe(recipe);
+        }
     };
 
+    // ✅ 모달 저장 시 북마크 추가
+    const handleSaveClip = async (recipeId, comment) => {
+        await ClipAddBookclipUpdate(recipeId, comment, modalRecipe);
+        setBookmarkedIds(prev => new Set(prev).add(recipeId));
+        setModalRecipe(null);
+    };
+
+    // ✅ 검색어 반영
     useEffect(() => {
         setInputTerm(urlQuery);
         setFilterType(urlFilter);
     }, [urlQuery, urlFilter]);
 
-    // 로딩 및 에러 처리는
     if (isLoading) return <div>'{urlQuery}' 검색 중...</div>;
     if (error) return <div>오류: {error.message}</div>;
+
+    // ✅ 전체 레시피 변환
+    const allRecipes = data?.pages?.flatMap((page) =>
+        page.map((r) => ({
+            id: r.RCP_SEQ,
+            imageUrl: r.ATT_FILE_NO_MAIN,
+            title: r.RCP_NM,
+            description: r.RCP_PARTS_DTLS,
+            category: r.RCP_PAT2,
+            method: r.RCP_WAY2,
+        }))
+    ) || [];
 
     return (
         <div style={containerStyle}>
@@ -78,36 +146,21 @@ const SearchPage = () => {
             />
             <hr className={styles.hr}></hr>
 
-            {/* 검색 결과가 없을 때 메시지 표시 */}
-            {!isLoading && urlQuery && data?.pages[0]?.length === 0 && (
+            {!isLoading && urlQuery && allRecipes.length === 0 && (
                 <div className={styles.noResults}>'{urlQuery}'에 대한 검색 결과가 없습니다.</div>
             )}
 
             <div className={styles.gridContainer}>
-                {data?.pages?.flatMap((pageData) =>
-                    pageData.map((recipe) => {
-                        const recipeProps = {
-                            id: recipe.RCP_SEQ,
-                            imageUrl: recipe.ATT_FILE_NO_MAIN,
-                            title: recipe.RCP_NM,
-                            description: recipe.RCP_PARTS_DTLS,
-                            category: recipe.RCP_PAT2,
-                            method: recipe.RCP_WAY2, // (way -> method로 변경)
-                            prepTime: recipe.INFO_WGT ? `${recipe.INFO_WGT}g` : '정보없음',
-                            cookTime: recipe.INFO_ENG ? `${recipe.INFO_ENG}kcal` : '정보없음',
-                            isBookmarked: false
-                        };
-
-                        return (
-                            <RecipeCard
-                                key={recipe.RCP_SEQ}
-                                recipe={recipeProps}
-                                // 카드에 모달을 여는 함수 전달
-                                onOpenModal={() => setModalRecipe(recipeProps)}
-                            />
-                        );
-                    })
-                )}
+                {allRecipes.map((recipe) => (
+                    <RecipeCard
+                        key={recipe.id}
+                        recipe={{
+                            ...recipe,
+                            isBookmarked: bookmarkedIds.has(recipe.id),
+                        }}
+                        onBookmarkClick={() => handleBookmarkClick(recipe)}
+                    />
+                ))}
             </div>
 
             {hasNextPage && (
@@ -116,14 +169,12 @@ const SearchPage = () => {
                     disabled={!hasNextPage || isFetchingNextPage}
                     className={styles.loadMoreButton}
                 >
-                    {isFetchingNextPage 
-                    ? '불러오는 중...' 
-                    :'검색 결과 더보기' 
-                    }
+                    {isFetchingNextPage
+                        ? '불러오는 중...'
+                        : '검색 결과 더보기'}
                 </button>
             )}
 
-            {/* 모달 렌더링 */}
             {modalRecipe && (
                 <ClipAddModal
                     recipe={modalRecipe}
