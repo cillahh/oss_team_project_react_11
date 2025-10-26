@@ -91,10 +91,13 @@
 }
 .section {
   margin-top: 40px;
+  border-radius: 16px;
+  border : 1px solid #f0f0f0;
+  padding: 20px;
 }
 .subTitle {
   font-family: 'Do Hyeon', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin: 0 0 20px 0;
   border-bottom: 2px solid #f0f0f0;
@@ -104,8 +107,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 12px 24px;
-  font-size: 1.1rem;
-  color: #555;
+  font-size: 1rem;
+  color: #222;
   padding: 0 10px;
 }
 .ingredientItem {
@@ -113,7 +116,7 @@
   padding-left: 8px;
 }
 .ingredientItem strong {
-    color: #000;
+    color: #555;
     font-weight: 400;
     margin-left: 8px;
 }
@@ -131,14 +134,14 @@
 }
 .stepTitle {
   font-family: 'Do Hyeon', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #000;
   font-weight: 400;
 }
 .stepDescription {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #555;
-  line-height: 1.7;
+  line-height: 1.3;
   margin: 0;
   white-space: pre-wrap;
 }

@@ -154,7 +154,7 @@ const RecipeDetailPage = () => {
         )}
 
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>재료</h2>
+          <h3 className={styles.subTitle}>재료</h3>
           <div className={styles.ingredientsList}>
             {ingredients.map((item, index) => (
               <span key={index} className={styles.ingredientItem}>
@@ -165,7 +165,7 @@ const RecipeDetailPage = () => {
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>만드는 법</h2>
+          <h3 className={styles.subTitle}>만드는 법</h3>
           <ol className={styles.stepsList}>
             {steps.map((step, index) => (
               <li key={index} className={styles.stepItem}>
