@@ -30,8 +30,8 @@ const SearchComponent = ({
         >
           {/* [중요] value는 API가 기대하는 값과 일치해야 합니다. */}
           {/* (예: 'recipe'는 API의 RCP_NM, 'ingredient'는 RCP_PARTS_DTLS) */}
-          <option value="recipe">카테고리</option>
-          <option value="ingredient">조리법</option>
+          <option value="recipe">제목</option>
+          <option value="ingredient">재료</option>
         </select>
 
         {/* input에 value와 onChange를 연결합니다. */}

@@ -1,7 +1,9 @@
 .pageContainer {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  /* grid-template-columns: 260px 1fr; */
+  grid-template-columns: 260px minmax(0, 1000px);
   height: calc(100vh - 55px);
+  justify-content: start;
 }
 
 .sidebar {
@@ -13,9 +15,11 @@
 }
 
 .mainContent {
-  padding: 40px 160px 40px 40px; 
+  padding: 40px 40px 40px 40px; 
   overflow-y: auto;
   box-sizing: border-box;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .title {
@@ -31,7 +35,6 @@
 .hr {
     height: 1px;
     background-color: #FFEC97;
-    ;
     border: 0;
     margin-bottom: 30px;
 }
